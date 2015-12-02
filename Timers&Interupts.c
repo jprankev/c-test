@@ -47,8 +47,11 @@ void TMR0_INIT(void)
 
 void INT_INIT(void)
 {
-//      INTCONbits.INT0IE = 1;
-//      INTCON2bits.INTEDG0 = 0;
+    INTCONbits.INT0IF = 0;    //clear flag  
+    INTCONbits.INT0IE = 1;     //external int enabled
+    INTCONbits.RBIE = 1;      //int on change enabled
+    INTCON2bits.INTEDG0 = 0;  //int on falling edge
+    INTCON2bits.RBIP = 1;     //high priority
     
 }
 
@@ -56,6 +59,11 @@ void INT_INIT(void)
 //                                 Interrupts
 //******************************************************************************
 
+void interrupt debounce(void)
+{
+    INTCONbits.INT0IF = 0;
+    
+}
 
 //****************************************************************************
 //This function contains the functionality of the Low Interrupt.  It resets the 
